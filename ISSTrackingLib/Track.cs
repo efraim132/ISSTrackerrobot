@@ -14,7 +14,7 @@ namespace ISSTracking
             var RawResponse = new WebClient().DownloadString("http://api.open-notify.org/iss-now.json");
 
             dynamic Response = JsonConvert.DeserializeObject(RawResponse);
-            Location location = new Location();
+            Location location;
             location.lat = Response.iss_position.latitude;
             location.lon = Response.iss_position.longitude;
             return location;
