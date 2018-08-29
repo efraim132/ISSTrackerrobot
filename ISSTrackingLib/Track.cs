@@ -1,24 +1,30 @@
 ﻿using System;
 using System.Net;
 using Newtonsoft.Json;
+using ISStracking;
 
-namespace ISSTracking
-{
+namespace ISStracking {
     public struct Location {
-        public float lon;
-        public float lat;
+        public double lon;
+        public double lat;
+        public double alt;
     }
+}
+
+namespace ISSTracking.Web {
+
 
     public class Track {
         public static Location GetLocation() {
-            var RawResponse = new WebClient().DownloadString("http://api.open-notify.org/iss-now.json");
+            var RawResponse = new WebClient().DownloadString("https://api.wheretheiss.at/v1/satellites/25544");
 
             dynamic Response = JsonConvert.DeserializeObject(RawResponse);
             Location location;
-            location.lat = Response.iss_position.latitude;
-            location.lon = Response.iss_position.longitude;
+            location.lat = Response.latitude;
+            location.lon = Response.longitude;
+            location.alt = Response.altitude;
             return location;
-        } 
+        }
     }
 
 }
